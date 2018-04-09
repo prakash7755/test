@@ -8,25 +8,35 @@ const { CmsData } = require(path.resolve('./models'));
 router.route('/')
 
 .post((req, res, next) => {
-	const cmsData = new CmsData(res.body)
-	cmsData.save() 
-	  .then(data => {
-	  	res.json({message: 'updated Successfully', data})
-	  })
-	  .catch(error => {
-	  	res.json({message: 'sorry...! server problem'});
-	  })
+	const product = req.body.product.split(',');
+	const services = req.body.services.split(',');
+    req.body.product = product;
+    req.body.services = services;
+	const cmsData = new CmsData(req.body);
+	try{
+		const result = cmsData.save();
+		if (!result) {
+			return res.json({message: 'Not Updated Successfully'})
+		}
+		 res.json({message: 'updated Successfully'})
+	}
+	catch(error){
+		next(error)
+	}
 })
 
 
-.get((req, res, next) => {
-	CmsData.find({})
-	  .then(data => {
-	  	res.json(data)
-	  })
-	  .catch(error => {
-	  	res.json({message: 'sorry...! server problem'});
-	  })
+.get(async(req, res, next) => {
+	try {
+		const result = await CmsData.find({})
+		if (result.length === 0) {
+			return res.json({message: 'No Data Found In DataBase'})
+		}
+       res.json(result)
+	}
+	catch (error){
+		next(error)
+	}
 })
 
 module.exports = router;

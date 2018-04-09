@@ -7,9 +7,9 @@ const CmsData = new Schema({
 	aboutp3: {type: String},
 	product: {type: String},
 	services: {type: String},
-    email: {type: String, unique: true},
-    email1: {type: String, unique: true},
-    mobile: {type: Number},
+    email: {type: String},
+    email1: {type: String},
+    mobile: {type: String},
     mobile1: {type: Number},
     address: {type: String}
 })
