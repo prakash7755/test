@@ -18,7 +18,7 @@ router.route('/')
 		if (!result) {
 			return res.json({message: 'Not Updated Successfully'})
 		}
-		 res.json({message: 'updated Successfully'})
+		 res.json({message: 'Updated Successfully'})
 	}
 	catch(error){
 		next(error)
